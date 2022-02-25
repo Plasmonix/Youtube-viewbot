@@ -25,7 +25,7 @@ def banner():
                    ██║      ██║        ╚████╔╝ ██║███████╗╚███╔███╔╝    ██████╔╝╚██████╔╝   ██║   
                    ╚═╝      ╚═╝         ╚═══╝  ╚═╝╚══════╝ ╚══╝╚══╝     ╚═════╝  ╚═════╝    ╚═╝
   
-                                     """ + END + BLUE + """ Made by Plasmonix  Version 1.0 /n""" + END)  
+                                     """ + END + BLUE + """github.com/Plasmonix  Version 1.0 \n""" + END)  
 banner()
 
 try :
@@ -74,9 +74,3 @@ if __name__ == "__main__":
         proxy = random_proxy(proxies)
         load_url(ua, sleep_time, proxy, proxies)
         print(GREEN + """ [*] Adding views  """ + END)
-        
-
-
-
-
- 
