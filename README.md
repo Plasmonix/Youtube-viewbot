@@ -12,7 +12,7 @@ run main.py
 ```  
 
 ## 📷 Demo
-![](https://raw.githubusercontent.com/Plasmonix/Youtube-viewbot/main/demo.png)
+![](https://raw.githubusercontent.com/Plasmonix/Youtube-viewbot/main/screenshot.png)
 
 ## 🏆 Features List
 - Simple Usage
