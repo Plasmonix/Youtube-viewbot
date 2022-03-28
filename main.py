@@ -1,5 +1,4 @@
-import os
-import random
+import os,random
 from time import sleep
 from selenium import webdriver
 from urllib.request import Request, urlopen
@@ -38,12 +37,11 @@ def banner():
             if blue > 255:
                 blue = 255
     print(faded)
-    print(YELLOW + "                                       github.com/Plasmonix Version 2.0 \n" + END)
+    print(YELLOW+"                                       github.com/Plasmonix Version 2.0 \n"+END)
 banner()
 
 ua = UserAgent()
 proxies = []
-
 def load_proxies():
     try:
         proxyfile = open(fp, "r+").readlines()
@@ -54,7 +52,7 @@ def load_proxies():
                 'ip': ip.rstrip("\n"),
                 'port' : port.rstrip("\n")})
     except:
-           print(RED + " [!] File not found " + END)
+           print(RED+" [!] File not found "+END)
            quit()
 
 def scrape_proxies():
@@ -69,27 +67,25 @@ def scrape_proxies():
                     'ip':   row.find_all('td')[0].string,
                     'port': row.find_all('td')[1].string})
     except:
-        print(RED + " [!] Failed to scrape proxies " + END)
+        print(RED+" [!] Failed to scrape proxies "+END)
         quit()
 
 def random_proxy(proxies):
     return random.choice(proxies)
 
 try:
-   url = input(BLUE + " [*] Enter video url> " + END)
-   views = int(input(CYAN + " [*] Enter number of views> " + END))
-   min_watch = int(input(BROWN + " [*] Enter minimum watchtime (in seconds)> " + END))
-   max_watch = int(input(PURPLE + " [*] Enter maximum watchtime (in seconds)> " + END))
-   choice = input(RED + " [!] Do you want to use custom proxies ? Y/n> " + END).lower()
+   url = input(BLUE+" [*] Enter video url> "+END)
+   views = int(input(CYAN+" [*] Enter number of views> "+END))
+   min_watch = int(input(BROWN+" [*] Enter minimum watchtime (in seconds)> "+END))
+   max_watch = int(input(PURPLE+" [*] Enter maximum watchtime (in seconds)> "+END))
+   choice = input(RED+" [!] Do you want to use custom proxies ? Y/n> "+END).lower()
    if choice == 'y':
-       fp = input(YELLOW + " [*] Path to proxyfile> " +END)
+       fp = input(YELLOW+" [*] Path to proxyfile> "+END)
        load_proxies()
-       proxy = random_proxy(proxies)
    elif choice == 'n':
-        scrape_proxies()
-        proxy = random_proxy(proxies)
+       scrape_proxies()
 except ValueError: 
-       print(RED + " [!] Invalid value" + END)
+       print(RED+" [!] Invalid value"+END)
        quit()
 
 def load_url(ua, sleep_time, proxy):
@@ -98,6 +94,7 @@ def load_url(ua, sleep_time, proxy):
             (proxy['ip'] + ':' + proxy['port']))
     options.add_argument('user-agent=%s' % ua.random)
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    #Uncomment below if you don't have chromedriver.exe in root folder
     #browser_driver = path/to/webdriver
     #driver = webdriver.Chrome(executable_path=browser_driver, options=options)
     driver = webdriver.Chrome(options=options)
@@ -108,5 +105,6 @@ def load_url(ua, sleep_time, proxy):
 if __name__ == "__main__":
     for i in range(views):
         sleep_time = random.randint(min_watch,max_watch)
+        proxy = random_proxy(proxies)
         load_url(ua, sleep_time, proxy)
-        print(GREEN + " [*] Adding views " + END)
+        print(GREEN+" [*] Adding views "+END)
