@@ -5,18 +5,29 @@ from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
-PURPLE = '\033[95m'
-CYAN = '\033[36m'
-BLUE = '\033[34m'
-GREEN = '\033[32m'
-YELLOW = '\033[93m'
-RED = '\033[91m'
-BROWN = "\033[33m"
-END = '\033[0m'
+# Credit to Pycenter by billythegoat356
+# Github: https://github.com/billythegoat356/pycenter/
+# License: https://github.com/billythegoat356/pycenter/blob/main/LICENSE
 
+def center(var:str, space:int=None): # From Pycenter
+    if not space:
+        space = (os.get_terminal_size().columns - len(var.splitlines()[int(len(var.splitlines())/2)])) / 2
+    
+    return "\n".join((' ' * int(space)) + var for var in var.splitlines())
+
+class Fore:
+    YELLOW = '\033[93m'
+    GREEN = '\033[32m'
+    RED = '\033[91m'
+    CYAN = '\033[36m'
+    GREEN = '\033[32m'
+    RESET = '\033[0m' 
+
+proxies,proxytype = [],None
+    
 def banner():
     os.system('cls && title [YT View Bot v2] - Made by Plasmonix' if os.name == "nt" else 'clear') 
-    text = """                          
+    text = '''                          
                      ▓██   ██▓▄▄▄█████▓    ██▒   █▓ ██▓▓█████  █     █░    ▄▄▄▄    ▒█████  ▄▄▄█████▓
                       ▒██  ██▒▓  ██▒ ▓▒   ▓██░   █▒▓██▒▓█   ▀ ▓█░ █ ░█░   ▓█████▄ ▒██▒  ██▒▓  ██▒ ▓▒
                        ▒██ ██░▒ ▓██░ ▒░    ▓██  █▒░▒██▒▒███   ▒█░ █ ░█    ▒██▒ ▄██▒██░  ██▒▒ ▓██░ ▒░
@@ -26,22 +37,18 @@ def banner():
                       ▓██ ░▒░     ░          ░ ░░   ▒ ░ ░ ░  ░  ▒ ░ ░     ▒░▒   ░   ░ ▒ ▒░     ░    
                       ▒ ▒ ░░    ░              ░░   ▒ ░   ░     ░   ░      ░    ░ ░ ░ ░ ▒    ░      
                       ░ ░                       ░   ░     ░  ░    ░        ░          ░ ░           
-                      ░ ░                      ░                                ░                   
- """
-    faded = ""
-    blue = 100
+                      ░ ░                      ░                                ░                '''
+    faded = ''
+    cyan = 100
     for line in text.splitlines():
-        faded += (f"\033[38;2;0;255;{blue}m{line}\033[0m\n")
-        if not blue == 255:
-            blue += 15
-            if blue > 255:
-                blue = 255
-    print(faded)
-    print(YELLOW+"                                       github.com/Plasmonix Version 2.0 \n"+END)
-banner()
+        faded += (f"\033[38;2;0;255;{cyan}m{line}\033[0m\n")
+        if not cyan == 255:
+            cyan += 15
+            if cyan > 255:
+                cyan = 255
+    print(center(faded))
+    print(center(f'{Fore.YELLOW}\ngithub.com/Plasmonix Version 2.0{Fore.RESET}'))
 
-ua = UserAgent()
-proxies = []
 def load_proxies():
     try:
         proxyfile = open(fp, "r+").readlines()
@@ -52,7 +59,7 @@ def load_proxies():
                 'ip': ip.rstrip("\n"),
                 'port' : port.rstrip("\n")})
     except:
-           print(RED+" [!] File not found "+END)
+           print(f'{Fore.RED}[!] File not found{Fore.RESET}')
            quit()
 
 def scrape_proxies():
@@ -67,31 +74,12 @@ def scrape_proxies():
                     'ip':   row.find_all('td')[0].string,
                     'port': row.find_all('td')[1].string})
     except:
-        print(RED+" [!] Failed to scrape proxies "+END)
+        print(f'{Fore.RED}[!] Failed to scrape proxies{Fore.REEST}')
         quit()
 
-def random_proxy(proxies):
-    return random.choice(proxies)
-
-try:
-   url = input(BLUE+" [*] Enter video url> "+END)
-   views = int(input(CYAN+" [*] Enter number of views> "+END))
-   min_watch = int(input(BROWN+" [*] Enter minimum watchtime (in seconds)> "+END))
-   max_watch = int(input(PURPLE+" [*] Enter maximum watchtime (in seconds)> "+END))
-   choice = input(RED+" [!] Do you want to use custom proxies ? Y/n> "+END).lower()
-   if choice == 'y':
-       fp = input(YELLOW+" [*] Path to proxyfile> "+END)
-       load_proxies()
-   elif choice == 'n':
-       scrape_proxies()
-except ValueError: 
-       print(RED+" [!] Invalid value"+END)
-       quit()
-
-def load_url(ua, sleep_time, proxy):
+def load_url(ua, sleeptime, proxy):
     options = webdriver.ChromeOptions()
-    options.add_argument('--proxy-server=%s' %
-            (proxy['ip'] + ':' + proxy['port']))
+    options.add_argument('--proxy-server=%s' % (proxy['ip'] + ':' + proxy['port']))
     options.add_argument('user-agent=%s' % ua.random)
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     #Uncomment below if you don't have chromedriver.exe in root folder
@@ -99,12 +87,33 @@ def load_url(ua, sleep_time, proxy):
     #driver = webdriver.Chrome(executable_path=browser_driver, options=options)
     driver = webdriver.Chrome(options=options)
     driver.get(url)
-    sleep(sleep_time)
+    sleep(sleeptime)
     driver.quit()
 
 if __name__ == "__main__":
+    banner()
+    try:
+        url = input(f'[{Fore.CYAN}*{Fore.RESET}] Enter video url> ')
+        views = int(input(f'[{Fore.CYAN}*{Fore.RESET}] Enter number of views> '))
+        minwatch = int(input(f'[{Fore.CYAN}*{Fore.RESET}] Enter minimum watchtime (in seconds)> '))
+        maxwatch = int(input(f'[{Fore.CYAN}*{Fore.RESET}] Enter maximum watchtime (in seconds)> '))
+        customproxies = input(f'[{Fore.CYAN}*{Fore.RESET}] Do you want to use custom proxies ? Y/n> ').lower()
+        if customproxies == 'y':
+            fp = input(f'[{Fore.CYAN}*{Fore.RESET}] Path to proxyfile> ')
+            load_proxies()
+        elif customproxies == 'n':
+            scrape_proxies()
+        else:
+             print(f'{Fore.RED}[!] Please enter a valid choice such as Y or n!{Fore.RESET}')
+    except ValueError: 
+       print(f'{Fore.RED}[!] Invalid value{Fore.RESET}')
+       quit()
+
+    os.system('cls')
+    banner()
     for i in range(views):
-        sleep_time = random.randint(min_watch,max_watch)
-        proxy = random_proxy(proxies)
-        load_url(ua, sleep_time, proxy)
-        print(GREEN+" [*] Adding views "+END)
+        ua = UserAgent()
+        sleeptime = random.randint(minwatch,maxwatch)
+        proxy = random.choice(proxies)
+        load_url(ua, sleeptime, proxy)
+        print(f'{Fore.GREEN}[*] Adding views{Fore.RESET}')
