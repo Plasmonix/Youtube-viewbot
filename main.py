@@ -74,7 +74,7 @@ def scrape_proxies():
                     'ip':   row.find_all('td')[0].string,
                     'port': row.find_all('td')[1].string})
     except:
-        print(f'{Fore.RED}[!] Failed to scrape proxies{Fore.REEST}')
+        print(f'{Fore.RED}[!] Failed to scrape proxies{Fore.RESET}')
         quit()
 
 def load_url(ua, sleeptime, proxy):
