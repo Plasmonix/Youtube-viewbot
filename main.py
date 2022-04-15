@@ -23,7 +23,7 @@ class Fore:
     GREEN = '\033[32m'
     RESET = '\033[0m' 
 
-proxies,proxytype = [],None
+,None
     
 def banner():
     os.system('cls && title [YT View Bot v2] - Made by Plasmonix' if os.name == "nt" else 'clear') 
@@ -62,6 +62,8 @@ def load_proxies():
            print(f'{Fore.RED}[!] File not found{Fore.RESET}')
            quit()
 
+proxies = []
+ua = UserAgent()
 def scrape_proxies():
     try:
         proxies_req = Request('https://www.sslproxies.org/')
@@ -97,7 +99,7 @@ if __name__ == "__main__":
         views = int(input(f'[{Fore.CYAN}*{Fore.RESET}] Enter number of views> '))
         minwatch = int(input(f'[{Fore.CYAN}*{Fore.RESET}] Enter minimum watchtime (in seconds)> '))
         maxwatch = int(input(f'[{Fore.CYAN}*{Fore.RESET}] Enter maximum watchtime (in seconds)> '))
-        customproxies = input(f'[{Fore.CYAN}*{Fore.RESET}] Do you want to use custom proxies ? Y/n> ').lower()
+        customproxies = input(f'[{Fore.CYAN}?{Fore.RESET}] Do you want to use custom proxies ? Y/n> ').lower()
         if customproxies == 'y':
             fp = input(f'[{Fore.CYAN}*{Fore.RESET}] Path to proxyfile> ')
             load_proxies()
@@ -112,7 +114,6 @@ if __name__ == "__main__":
     os.system('cls')
     banner()
     for i in range(views):
-        ua = UserAgent()
         sleeptime = random.randint(minwatch,maxwatch)
         proxy = random.choice(proxies)
         load_url(ua, sleeptime, proxy)
