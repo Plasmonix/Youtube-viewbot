@@ -20,10 +20,9 @@ class Fore:
     GREEN = '\033[32m'
     RED = '\033[91m'
     CYAN = '\033[36m'
-    GREEN = '\033[32m'
     RESET = '\033[0m' 
 
-,None
+proxies = []
     
 def banner():
     os.system('cls && title [YT View Bot v2] - Made by Plasmonix' if os.name == "nt" else 'clear') 
@@ -59,10 +58,9 @@ def load_proxies():
                 'ip': ip.rstrip("\n"),
                 'port' : port.rstrip("\n")})
     except:
-           print(f'{Fore.RED}[!] File not found{Fore.RESET}')
+           print(f'[{Fore.RED}!{Fore.RESET}] {Fore.RED}File not found{Fore.RESET}')
            quit()
 
-proxies = []
 ua = UserAgent()
 def scrape_proxies():
     try:
@@ -76,7 +74,7 @@ def scrape_proxies():
                     'ip':   row.find_all('td')[0].string,
                     'port': row.find_all('td')[1].string})
     except:
-        print(f'{Fore.RED}[!] Failed to scrape proxies{Fore.RESET}')
+        print(f'[{Fore.RED}!{Fore.RESET}] {Fore.RED}Failed to scrape proxies{Fore.RESET}')
         quit()
 
 def load_url(ua, sleeptime, proxy):
@@ -106,9 +104,10 @@ if __name__ == "__main__":
         elif customproxies == 'n':
             scrape_proxies()
         else:
-             print(f'{Fore.RED}[!] Please enter a valid choice such as Y or n!{Fore.RESET}')
+             print(f'[{Fore.RED}!{Fore.RESET}] {Fore.RED}Please enter a valid choice such as Y or n!{Fore.RESET}')
+             quit()
     except ValueError: 
-       print(f'{Fore.RED}[!] Invalid value{Fore.RESET}')
+       print(f'[{Fore.RED}!{Fore.RESET}] {Fore.RED}Value must be an integer{Fore.RESET}')
        quit()
 
     os.system('cls')
@@ -117,4 +116,3 @@ if __name__ == "__main__":
         sleeptime = random.randint(minwatch,maxwatch)
         proxy = random.choice(proxies)
         load_url(ua, sleeptime, proxy)
-        print(f'{Fore.GREEN}[*] Adding views{Fore.RESET}')
