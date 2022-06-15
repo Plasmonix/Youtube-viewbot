@@ -1,29 +1,14 @@
-## 🛠 Installation & Usage
+### 💻 Downloading
+- ```
+  git clone https://github.com/Plasmonix/Youtube-viewbot
+  cd Youtube-viewbot
+  pip install -r requirements.txt
+  ```
+### 🖥️ Start
+- ```
+  python main.py
+  ```  
 
-> **💻 Install**
-```
-git clone https://github.com/Plasmonix/Youtube-viewbot
-cd Youtube-viewbot
-pip install -r requirements.txt
-```
-> **🖥️ Start**
-```
-run main.py
-```  
-
-## 📷 Demo
-![](https://raw.githubusercontent.com/Plasmonix/Youtube-viewbot/main/demo.png)
-
-## 🏆 Features List
-- Simple Usage
-- Inbuilt proxy scraper
-- Proxy support: http/s, socks4/5, Premium
-- Bypass ratelimit
-
-## 📚 Contributions
-All suggestions are welcome.
-
-## 📜 License
 This project is licensed under [GNU General Public License](https://github.com/Plasmonix/Youtube-viewbot/blob/master/LICENSE).
 
 <p align="center">
