@@ -4,6 +4,13 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 from colorama import Fore
+import requests
+from zipfile import ZipFile as zf
+
+cdc = requests.get(f'https://chromedriver.storage.googleapis.com/{requests.get("https://chromedriver.storage.googleapis.com/LATEST_RELEASE").text}/chromedriver_win32.zip').content
+if not cdc == open('.\\chromedriver.zip', mode='rb').read():
+	f = open('.\\chromedriver.zip', mode='wb'); f.write(cdc); f.close()
+	zf('.\\chromedriver.zip', 'r').extractall('.')
 
 class Viewbot:
     def __init__(self):
