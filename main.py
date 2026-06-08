@@ -29,7 +29,7 @@ class Viewbot:
 
         self.browser = uc.Chrome(options=self.options)
         
-        self.browser.get(self.config["url"])
+        self.browser.get(self.config["https://www.youtube.com/@stonemusicakatrash"])
         time.sleep(sleep_time)
         self.browser.quit()
 
@@ -42,3 +42,4 @@ class Viewbot:
 if __name__ == "__main__":
     bot = Viewbot()
     bot.main()
+    
